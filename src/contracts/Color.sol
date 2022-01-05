@@ -11,9 +11,9 @@ contract Color is ERC721, ERC721Enumerable {
 
 
     function mint(string memory _color) public {
-      //Require unique color
+      require(!_colorExists[_color]);
       colors.push(_color);
-      uint _id = colors.length - 1;
+      uint _id = colors.length;
       _mint(msg.sender, _id);
       _colorExists[_color] = true;
       //Color - add
@@ -21,6 +21,7 @@ contract Color is ERC721, ERC721Enumerable {
      //Color - track it
     }
 
+//Required overrides for new version of OpenZeppelin:
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
     internal
     override(ERC721, ERC721Enumerable)
@@ -36,5 +37,6 @@ function supportsInterface(bytes4 interfaceId)
 {
     return super.supportsInterface(interfaceId);
 }
+//When called after mint(), totalSupply() can now be called in test
 
 }
