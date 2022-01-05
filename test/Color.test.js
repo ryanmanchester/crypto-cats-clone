@@ -25,4 +25,12 @@ contract('Color', (accounts) => {
       assert.equal(symbol, 'CLR')
     })
   })
+
+  describe('minting', async () => {
+    it('creates new token', async () => {
+      const result = await contract.mint('#EC058E')
+      const totalSupply = await contract.totalSupply()
+      assert.equal(totalSupply, 1)
+    })
+  })
 })
